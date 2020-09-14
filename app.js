@@ -4,6 +4,8 @@ const dotenv = require("dotenv");
 // const multer = require("multer");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const helmet = require("helmet");
+const mongoSanitize = require("express-mongo-sanitize");
 
 dotenv.config({ path: "./config.env" });
 
@@ -14,14 +16,15 @@ const imageRoutes = require("./routes/imageRoutes");
 
 const app = express();
 
+app.use(helmet());
+app.use(mongoSanitize());
+
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Getting rid of favicon icon request from react app
 app.get("/favicon.ico", (req, res) => res.status(204));
-
-app.get("/hey", (req, res) => res.send("ho!"));
 
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/images", imageRoutes);
