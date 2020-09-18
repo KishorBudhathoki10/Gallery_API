@@ -47,20 +47,6 @@ const userSchema = new Schema({
       message: "Passwords are not the same.",
     },
   },
-  cart: [
-    {
-      imageId: {
-        type: String,
-        required: true,
-      },
-      quantity: {
-        type: Number,
-        required: true,
-        min: 1,
-      },
-    },
-  ],
-
   cart: {
     // items:[String] // if we want array of string
     items: [

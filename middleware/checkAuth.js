@@ -19,6 +19,8 @@ module.exports = (req, res, next) => {
 
   const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
+  req.body.userId = decodedToken.id;
+
   // I will need to check wheather the user is still available in database.
 
   return next();

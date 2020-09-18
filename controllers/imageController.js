@@ -34,7 +34,13 @@ exports.getAllImages = catchAsync(async (req, res, next) => {
   });
 });
 
+let userId;
+
 exports.uploadImage = (req, res, next) => {
+  if (req.body.userId) {
+    userId = req.body.userId;
+  }
+
   singleUpload(req, res, function (err) {
     if (err) {
       return next(new AppError(err.message, 422));
@@ -46,7 +52,14 @@ exports.uploadImage = (req, res, next) => {
 
 exports.createImage = (req, res, next) => {
   // Note: req.body is empty file is being uploaded to aws but other things are not working
+
   const { title, price, description, discount, photoBy } = req.body;
+
+  let descriptionToSave = null;
+
+  if (description !== "") {
+    descriptionToSave = description;
+  }
 
   if (!req.file) {
     return next(new AppError("Image is required. Please upload a image."), 422);
@@ -56,10 +69,11 @@ exports.createImage = (req, res, next) => {
   Image.create({
     title,
     price,
-    description,
+    description: descriptionToSave,
     discount,
     photoBy,
     imageUrl,
+    userId,
   })
     .then((image) => {
       res.status(201).json({

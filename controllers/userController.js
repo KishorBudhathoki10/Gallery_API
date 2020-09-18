@@ -1,4 +1,5 @@
 const User = require("../models/userModel");
+const Image = require("../models/imageModel");
 const catchAsync = require("../utils/catchAsync");
 const ApiFeatures = require("../utils/apiFeatures");
 const upload = require("../services/userProfileImage-upload");
@@ -65,12 +66,23 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
 });
 
 exports.getUser = catchAsync(async (req, res, next) => {
-  const user = await User.findById(req.params.id);
+  const user = await User.findById(req.body.userId);
 
   res.status(200).json({
     status: "success",
     data: {
       user,
+    },
+  });
+});
+
+exports.getUserImages = catchAsync(async (req, res, next) => {
+  const images = await Image.find().where({ userId: req.body.userId });
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      images,
     },
   });
 });

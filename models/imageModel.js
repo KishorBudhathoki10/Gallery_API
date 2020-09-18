@@ -14,7 +14,7 @@ const imageSchema = new mongoose.Schema(
       type: Number,
       required: [true, "Price must be provided."],
       min: [0.01, "Price should be greater than 0."],
-      max: [5000, "Price should be less than or equal to 5000."],
+      max: [4999, "Price should be less than or equal to 4999."],
     },
     imageUrl: {
       type: String,
@@ -35,6 +35,11 @@ const imageSchema = new mongoose.Schema(
       type: String,
       trim: true,
       required: [true, "Photographers name is must."],
+    },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: [true, "User Id in must."],
     },
   },
   { timestamps: true }

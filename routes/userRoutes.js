@@ -9,14 +9,15 @@ const router = express.Router();
 router.post("/signup", authController.signup);
 router.post("/login", authController.login);
 
-router.get("/", userController.getAllUsers);
+// router.get("/", userController.getAllUsers);
 
 router
   .route("/:id")
-  .get(userController.getUser)
+  .get(checkAuth, userController.getUser)
   .patch(userController.updateUser);
 
-// I will need to put checkAuth here.
+router.route("/:id/images").get(checkAuth, userController.getUserImages);
+
 router.post(
   "/:id/profileImage",
   checkAuth,

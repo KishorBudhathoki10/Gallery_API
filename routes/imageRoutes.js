@@ -8,12 +8,12 @@ const router = express.Router();
 router
   .route("/")
   .get(imageController.getAllImages)
-  .post(imageController.uploadImage, imageController.createImage);
+  .post(checkAuth, imageController.uploadImage, imageController.createImage);
 
 router
   .route("/:id")
   .get(imageController.getImage)
-  .patch(imageController.uploadImage, imageController.updateImage)
-  .delete(imageController.deleteImage);
+  .patch(checkAuth, imageController.uploadImage, imageController.updateImage)
+  .delete(checkAuth, imageController.deleteImage);
 
 module.exports = router;
