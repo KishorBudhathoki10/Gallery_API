@@ -10,10 +10,8 @@ router
   .get(imageController.getAllImages)
   .post(checkAuth, imageController.uploadImage, imageController.createImage);
 
-router
-  .route("/:id")
-  .get(imageController.getImage)
-  .patch(checkAuth, imageController.uploadImage, imageController.updateImage)
-  .delete(checkAuth, imageController.deleteImage);
+router.route("/:id").get(imageController.getImage);
+// .patch(checkAuth, imageController.uploadImage, imageController.updateImage)
+// .delete(checkAuth, imageController.deleteImage);
 
 module.exports = router;
